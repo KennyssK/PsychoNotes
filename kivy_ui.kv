@@ -1,0 +1,685 @@
+# kivy_ui.kv
+
+# Определяем стили для кнопок
+<RoundedButton@Button>:
+    background_normal: ''
+    background_color: (0.2, 0.6, 0.86, 1) # Голубой цвет
+    color: (1, 1, 1, 1) # Белый текст
+    canvas.before:
+        Color:
+            rgba: self.background_color
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: [dp(25)] # Овальная форма
+
+# Главный экран
+<MainScreen>:
+    name: 'main'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: dp(20)
+        spacing: dp(20)
+
+        # Верхняя пустота для центрирования кнопки "Создать заметку"
+        Widget:
+            size_hint_y: 0.2
+
+        RoundedButton:
+            text: 'Создать заметку'
+            font_size: dp(36)
+            size_hint: (0.8, 0.4) # Крупная кнопка
+            pos_hint: {'center_x': 0.5}
+            on_release: app.root.current = 'create_note'
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: 0.3
+            spacing: dp(20)
+            padding: dp(10)
+
+            RoundedButton:
+                text: 'Клиенты'
+                font_size: dp(24)
+                size_hint_x: 0.5
+                on_release: app.root.current = 'clients'
+
+            RoundedButton:
+                text: 'История'
+                font_size: dp(24)
+                size_hint_x: 0.5
+                on_release: app.root.current = 'history'
+        # Нижняя пустота
+        Widget:
+            size_hint_y: 0.1
+
+# Экран создания/редактирования заметки
+<CreateNoteScreen>:
+    name: 'create_note'
+    client_id_input: root.client_id_input
+    full_name_input: root.full_name_input
+    age_input: root.age_input
+    phone_input: root.phone_input
+    meeting_date_input: root.meeting_date_input
+    meeting_time_input: root.meeting_time_input
+    meeting_location_input: root.meeting_location_input
+    weather_input: root.weather_input
+    initial_state_input: root.initial_state_input
+    initial_state_score_input: root.initial_state_score_input
+    request_input: root.request_input
+    meeting_progress_input: root.meeting_progress_input
+    techniques_input: root.techniques_input
+    outcome_input: root.outcome_input
+    final_state_input: root.final_state_input
+    final_state_score_input: root.final_state_score_input
+    delete_button_visible: root.delete_button_visible
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: dp(10)
+        spacing: dp(10)
+
+        ScrollView:
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: dp(10)
+                padding: dp(10)
+
+                Label:
+                    text: 'Клиент'
+                    font_size: dp(20)
+                    size_hint_y: None
+                    height: dp(40)
+                    halign: 'left'
+                    text_size: self.size
+
+                GridLayout:
+                    cols: 2
+                    spacing: dp(5)
+                    size_hint_y: None
+                    height: self.minimum_height
+
+                    Label:
+                        text: 'ФИО:'
+                        size_hint_y: None
+                        height: dp(40)
+                        halign: 'left'
+                        text_size: self.size
+                    TextInput:
+                        id: ti_full_name
+                        text: root.full_name_input
+                        on_text: root.full_name_input = self.text
+                        size_hint_y: None
+                        height: dp(40)
+                        background_color: (0.95,0.95,0.95,1)
+
+                    Label:
+                        text: 'Возраст:'
+                        size_hint_y: None
+                        height: dp(40)
+                        halign: 'left'
+                        text_size: self.size
+                    TextInput:
+                        id: ti_age
+                        text: root.age_input
+                        on_text: root.age_input = self.text
+                        input_type: 'number'
+                        size_hint_y: None
+                        height: dp(40)
+                        background_color: (0.95,0.95,0.95,1)
+
+                    Label:
+                        text: 'Телефон:'
+                        size_hint_y: None
+                        height: dp(40)
+                        halign: 'left'
+                        text_size: self.size
+                    TextInput:
+                        id: ti_phone
+                        text: root.phone_input
+                        on_text: root.phone_input = self.text
+                        input_type: 'number'
+                        size_hint_y: None
+                        height: dp(40)
+                        background_color: (0.95,0.95,0.95,1)
+
+                Label:
+                    text: 'Данные о встрече'
+                    font_size: dp(20)
+                    size_hint_y: None
+                    height: dp(40)
+                    halign: 'left'
+                    text_size: self.size
+
+                GridLayout:
+                    cols: 2
+                    spacing: dp(5)
+                    size_hint_y: None
+                    height: self.minimum_height
+
+                    Label:
+                        text: 'Дата:'
+                        size_hint_y: None
+                        height: dp(40)
+                        halign: 'left'
+                        text_size: self.size
+                    TextInput:
+                        id: ti_date
+                        text: root.meeting_date_input
+                        on_text: root.meeting_date_input = self.text
+                        size_hint_y: None
+                        height: dp(40)
+                        background_color: (0.95,0.95,0.95,1)
+
+                    Label:
+                        text: 'Время:'
+                        size_hint_y: None
+                        height: dp(40)
+                        halign: 'left'
+                        text_size: self.size
+                    TextInput:
+                        id: ti_time
+                        text: root.meeting_time_input
+                        on_text: root.meeting_time_input = self.text
+                        size_hint_y: None
+                        height: dp(40)
+                        background_color: (0.95,0.95,0.95,1)
+
+                    Label:
+                        text: 'Место:'
+                        size_hint_y: None
+                        height: dp(40)
+                        halign: 'left'
+                        text_size: self.size
+                    TextInput:
+                        id: ti_location
+                        text: root.meeting_location_input
+                        on_text: root.meeting_location_input = self.text
+                        size_hint_y: None
+                        height: dp(40)
+                        background_color: (0.95,0.95,0.95,1)
+
+                    Label:
+                        text: 'Погода:'
+                        size_hint_y: None
+                        height: dp(40)
+                        halign: 'left'
+                        text_size: self.size
+                    TextInput:
+                        id: ti_weather
+                        text: root.weather_input
+                        on_text: root.weather_input = self.text
+                        size_hint_y: None
+                        height: dp(40)
+                        background_color: (0.95,0.95,0.95,1)
+
+                Label:
+                    text: 'Заметки'
+                    font_size: dp(20)
+                    size_hint_y: None
+                    height: dp(40)
+                    halign: 'left'
+                    text_size: self.size
+
+                GridLayout:
+                    cols: 1
+                    spacing: dp(5)
+                    size_hint_y: None
+                    height: self.minimum_height
+
+                    Label:
+                        text: 'Состояние на начало:'
+                        size_hint_y: None
+                        height: dp(30)
+                        halign: 'left'
+                        text_size: self.size
+                    TextInput:
+                        id: ti_initial_state
+                        text: root.initial_state_input
+                        on_text: root.initial_state_input = self.text
+                        multiline: True
+                        size_hint_y: None
+                        height: dp(80)
+                        background_color: (0.95,0.95,0.95,1)
+
+                    Label:
+                        text: 'Оценка состояния (в баллах):'
+                        size_hint_y: None
+                        height: dp(30)
+                        halign: 'left'
+                        text_size: self.size
+                    TextInput:
+                        id: ti_initial_score
+                        text: root.initial_state_score_input
+                        on_text: root.initial_state_score_input = self.text
+                        input_type: 'number'
+                        size_hint_y: None
+                        height: dp(40)
+                        background_color: (0.95,0.95,0.95,1)
+
+                    Label:
+                        text: 'Запрос:'
+                        size_hint_y: None
+                        height: dp(30)
+                        halign: 'left'
+                        text_size: self.size
+                    TextInput:
+                        id: ti_request
+                        text: root.request_input
+                        on_text: root.request_input = self.text
+                        multiline: True
+                        size_hint_y: None
+                        height: dp(80)
+                        background_color: (0.95,0.95,0.95,1)
+
+                    Label:
+                        text: 'Ход встречи:'
+                        size_hint_y: None
+                        height: dp(30)
+                        halign: 'left'
+                        text_size: self.size
+                    TextInput:
+                        id: ti_progress
+                        text: root.meeting_progress_input
+                        on_text: root.meeting_progress_input = self.text
+                        multiline: True
+                        size_hint_y: None
+                        height: dp(120)
+                        background_color: (0.95,0.95,0.95,1)
+
+                    Label:
+                        text: 'Техники:'
+                        size_hint_y: None
+                        height: dp(30)
+                        halign: 'left'
+                        text_size: self.size
+                    TextInput:
+                        id: ti_techniques
+                        text: root.techniques_input
+                        on_text: root.techniques_input = self.text
+                        multiline: True
+                        size_hint_y: None
+                        height: dp(80)
+                        background_color: (0.95,0.95,0.95,1)
+
+                    Label:
+                        text: 'Итог встречи:'
+                        size_hint_y: None
+                        height: dp(30)
+                        halign: 'left'
+                        text_size: self.size
+                    TextInput:
+                        id: ti_outcome
+                        text: root.outcome_input
+                        on_text: root.outcome_input = self.text
+                        multiline: True
+                        size_hint_y: None
+                        height: dp(80)
+                        background_color: (0.95,0.95,0.95,1)
+
+                    Label:
+                        text: 'Состояние под конец:'
+                        size_hint_y: None
+                        height: dp(30)
+                        halign: 'left'
+                        text_size: self.size
+                    TextInput:
+                        id: ti_final_state
+                        text: root.final_state_input
+                        on_text: root.final_state_input = self.text
+                        multiline: True
+                        size_hint_y: None
+                        height: dp(80)
+                        background_color: (0.95,0.95,0.95,1)
+
+                    Label:
+                        text: 'Оценка состояния (в баллах):'
+                        size_hint_y: None
+                        height: dp(30)
+                        halign: 'left'
+                        text_size: self.size
+                    TextInput:
+                        id: ti_final_score
+                        text: root.final_state_score_input
+                        on_text: root.final_state_score_input = self.text
+                        input_type: 'number'
+                        size_hint_y: None
+                        height: dp(40)
+                        background_color: (0.95,0.95,0.95,1)
+
+                Button:
+                    text: 'Сохранить заметку'
+                    size_hint_y: None
+                    height: dp(50)
+                    background_color: (0.2, 0.6, 0.86, 1)
+                    color: (1,1,1,1)
+                    on_release: root.save_note()
+
+                Button:
+                    text: 'Удалить заметку'
+                    size_hint_y: None
+                    height: dp(50)
+                    background_color: (0.8, 0.2, 0.2, 1) # Красный цвет
+                    color: (1,1,1,1)
+                    opacity: 1 if root.delete_button_visible else 0 # Скрываем кнопку
+                    disabled: not root.delete_button_visible # Отключаем кнопку
+                    on_release: root.delete_note_from_db()
+
+                Button:
+                    text: 'Вернуться'
+                    size_hint_y: None
+                    height: dp(50)
+                    background_color: (0.5, 0.5, 0.5, 1)
+                    color: (1,1,1,1)
+                    on_release: app.root.current = 'main' # Или 'history'
+
+# Экран истории заметок
+<HistoryScreen>:
+    name: 'history'
+    notes_grid: notes_grid_id # Привязываем к ID в kv-файле
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: dp(10)
+        spacing: dp(10)
+
+        BoxLayout:
+            size_hint_y: None
+            height: dp(50)
+            Button:
+                text: 'Вернуться'
+                size_hint_x: 0.3
+                background_color: (0.5, 0.5, 0.5, 1)
+                color: (1,1,1,1)
+                on_release: app.root.current = 'main'
+            Label:
+                text: 'История заметок'
+                font_size: dp(24)
+                halign: 'center'
+                valign: 'middle'
+                text_size: self.size
+                size_hint_x: 0.7
+
+        ScrollView:
+            GridLayout:
+                id: notes_grid_id
+                cols: 1 # Отображаем заметки как список
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: dp(5)
+                padding: dp(5)
+
+# Экран списка клиентов
+<ClientsScreen>:
+    name: 'clients'
+    client_list_layout: client_list_layout_id
+    search_input: search_input_id
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: dp(10)
+        spacing: dp(10)
+
+        BoxLayout:
+            size_hint_y: None
+            height: dp(50)
+            Button:
+                text: 'Вернуться'
+                size_hint_x: 0.25
+                background_color: (0.5, 0.5, 0.5, 1)
+                color: (1,1,1,1)
+                on_release: app.root.current = 'main'
+            Label:
+                text: 'Клиенты'
+                font_size: dp(24)
+                halign: 'center'
+                valign: 'middle'
+                text_size: self.size
+                size_hint_x: 0.5
+            Button:
+                text: 'Добавить клиента'
+                size_hint_x: 0.25
+                background_color: (0.2, 0.6, 0.86, 1)
+                color: (1,1,1,1)
+                on_release: root.add_new_client()
+
+        TextInput:
+            id: search_input_id
+            hint_text: 'Поиск по ФИО клиента...'
+            size_hint_y: None
+            height: dp(40)
+            on_text: root.load_clients(self.text) # Вызываем загрузку клиентов при изменении текста
+            background_color: (0.95,0.95,0.95,1)
+
+        ScrollView:
+            BoxLayout:
+                id: client_list_layout_id
+                orientation: 'vertical'
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: dp(5)
+                padding: dp(5)
+
+# Экран карточки клиента
+<ClientCardScreen>:
+    name: 'client_card'
+    current_client_id: root.current_client_id
+    full_name_input: root.full_name_input
+    age_input: root.age_input
+    phone_input: root.phone_input
+    temperament_input: root.temperament_input
+    character_type_input: root.character_type_input
+    perception_type_input: root.perception_type_input
+    anamnesis_input: root.anamnesis_input
+    help_plan_input: root.help_plan_input
+    requests_container: requests_container_id
+    client_notes_layout: client_notes_layout_id
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: dp(10)
+        spacing: dp(10)
+
+        BoxLayout:
+            size_hint_y: None
+            height: dp(50)
+            Button:
+                text: 'Вернуться'
+                size_hint_x: 0.3
+                background_color: (0.5, 0.5, 0.5, 1)
+                color: (1,1,1,1)
+                on_release: app.root.current = 'clients'
+            Label:
+                text: 'Карточка клиента'
+                font_size: dp(24)
+                halign: 'center'
+                valign: 'middle'
+                text_size: self.size
+                size_hint_x: 0.4
+            Button:
+                text: 'Сохранить'
+                size_hint_x: 0.3
+                background_color: (0.2, 0.8, 0.2, 1) # Зеленый цвет
+                color: (1,1,1,1)
+                on_release: root.save_client()
+
+        ScrollView:
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: dp(10)
+                padding: dp(10)
+
+                GridLayout:
+                    cols: 2
+                    spacing: dp(5)
+                    size_hint_y: None
+                    height: self.minimum_height
+
+                    Label:
+                        text: 'ФИО:'
+                        size_hint_y: None
+                        height: dp(40)
+                        halign: 'left'
+                        text_size: self.size
+                    TextInput:
+                        id: ti_client_full_name
+                        text: root.full_name_input
+                        on_text: root.full_name_input = self.text
+                        size_hint_y: None
+                        height: dp(40)
+                        background_color: (0.95,0.95,0.95,1)
+
+                    Label:
+                        text: 'Возраст:'
+                        size_hint_y: None
+                        height: dp(40)
+                        halign: 'left'
+                        text_size: self.size
+                    TextInput:
+                        id: ti_client_age
+                        text: root.age_input
+                        on_text: root.age_input = self.text
+                        input_type: 'number'
+                        size_hint_y: None
+                        height: dp(40)
+                        background_color: (0.95,0.95,0.95,1)
+
+                    Label:
+                        text: 'Телефон:'
+                        size_hint_y: None
+                        height: dp(40)
+                        halign: 'left'
+                        text_size: self.size
+                    TextInput:
+                        id: ti_client_phone
+                        text: root.phone_input
+                        on_text: root.phone_input = self.text
+                        input_type: 'number'
+                        size_hint_y: None
+                        height: dp(40)
+                        background_color: (0.95,0.95,0.95,1)
+
+                    Label:
+                        text: 'Темперамент:'
+                        size_hint_y: None
+                        height: dp(40)
+                        halign: 'left'
+                        text_size: self.size
+                    TextInput:
+                        id: ti_client_temperament
+                        text: root.temperament_input
+                        on_text: root.temperament_input = self.text
+                        size_hint_y: None
+                        height: dp(40)
+                        background_color: (0.95,0.95,0.95,1)
+
+                    Label:
+                        text: 'Тип характера:'
+                        size_hint_y: None
+                        height: dp(40)
+                        halign: 'left'
+                        text_size: self.size
+                    TextInput:
+                        id: ti_client_character
+                        text: root.character_type_input
+                        on_text: root.character_type_input = self.text
+                        size_hint_y: None
+                        height: dp(40)
+                        background_color: (0.95,0.95,0.95,1)
+
+                    Label:
+                        text: 'Тип восприятия:'
+                        size_hint_y: None
+                        height: dp(40)
+                        halign: 'left'
+                        text_size: self.size
+                    TextInput:
+                        id: ti_client_perception
+                        text: root.perception_type_input
+                        on_text: root.perception_type_input = self.text
+                        size_hint_y: None
+                        height: dp(40)
+                        background_color: (0.95,0.95,0.95,1)
+
+                Label:
+                    text: 'Запросы:'
+                    font_size: dp(20)
+                    size_hint_y: None
+                    height: dp(40)
+                    halign: 'left'
+                    text_size: self.size
+
+                BoxLayout:
+                    orientation: 'vertical'
+                    id: requests_container_id # Контейнер для динамических полей запросов
+                    size_hint_y: None
+                    height: self.minimum_height
+                    spacing: dp(5)
+
+                Button:
+                    text: 'Добавить поле для запроса'
+                    size_hint_y: None
+                    height: dp(40)
+                    background_color: (0.6, 0.8, 0.9, 1)
+                    color: (0,0,0,1)
+                    on_release: root.add_request_input_field()
+
+                Label:
+                    text: 'Анамнез:'
+                    font_size: dp(20)
+                    size_hint_y: None
+                    height: dp(40)
+                    halign: 'left'
+                    text_size: self.size
+                TextInput:
+                    id: ti_client_anamnesis
+                    text: root.anamnesis_input
+                    on_text: root.anamnesis_input = self.text
+                    multiline: True
+                    size_hint_y: None
+                    height: dp(120)
+                    background_color: (0.95,0.95,0.95,1)
+
+                Label:
+                    text: 'План помощи:'
+                    font_size: dp(20)
+                    size_hint_y: None
+                    height: dp(40)
+                    halign: 'left'
+                    text_size: self.size
+                TextInput:
+                    id: ti_client_help_plan
+                    text: root.help_plan_input
+                    on_text: root.help_plan_input = self.text
+                    multiline: True
+                    size_hint_y: None
+                    height: dp(120)
+                    background_color: (0.95,0.95,0.95,1)
+
+                Button:
+                    text: 'Удалить клиента'
+                    size_hint_y: None
+                    height: dp(50)
+                    background_color: (0.8, 0.2, 0.2, 1) # Красный цвет
+                    color: (1,1,1,1)
+                    on_release: root.delete_current_client()
+
+                Label:
+                    text: 'Заметки по клиенту:'
+                    font_size: dp(20)
+                    size_hint_y: None
+                    height: dp(40)
+                    halign: 'left'
+                    text_size: self.size
+
+                GridLayout:
+                    id: client_notes_layout_id
+                    cols: 1 # Отображаем заметки как список
+                    size_hint_y: None
+                    height: self.minimum_height
+                    spacing: dp(5)
+                    padding: dp(5)
